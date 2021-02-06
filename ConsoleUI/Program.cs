@@ -1,7 +1,7 @@
 ﻿using System;
 using Business.Concrete;
-using DataAccess.Concrete.InMemory;
 using Entities.Concrete;
+using DataAccess.Concrete.EntityFramework;
 
 namespace ConsoleUI
 {
@@ -9,51 +9,66 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("ReCap Homework - Emir TUGAYLI");
+            CarManager carManager = new CarManager(new EfCarDal());
+            BrandManager brandManager = new BrandManager(new EfBrandDal());
+            ColorManager colorManager = new ColorManager(new EfColorDal());
+            var carList = carManager.GetAll();
+            var brandList = brandManager.GetAll();
+            var colorList = colorManager.GetAll();
+            Console.WriteLine("ReCap Homework - Emir TUGAYLI \n \n");
             Console.WriteLine("===== Rent A Car Demo=====");
-            CarManager carManager = new CarManager(new InMemoryCarDal());
             Console.WriteLine("-Arabalar Listeleniyor-");
-            foreach (var car in carManager.GetAll())
+            foreach (var item in carList)
             {
-                Console.WriteLine($"{car.Description} Fiyati : {car.DailyPrice}");
+                Console.WriteLine($"{item.Description} fiyati : {item.DailyPrice}");
             }
             Console.WriteLine("-Araba Silme Demosu-");
             Console.Write("Silmek istediginiz arabanin ID'sini giriniz : ");
             try
             {
                 int id = Convert.ToInt32(Console.ReadLine());
-                carManager.Delete(id);
-                Console.WriteLine($"#{id}'li araba basariyla sistemimizden silinmistir. Guncel araba listesini goruntelemek icin 1'e tiklayiniz.");
-                int getAll = Convert.ToInt32(Console.ReadLine());
-                if (getAll==1)
-                {
-                    foreach (var car in carManager.GetAll())
-                    {
-                        Console.WriteLine($"{car.Description} Fiyati : {car.DailyPrice}");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Hatali giris yaptiniz");
-                }
+                carManager.Delete(carManager.GetCarById(id));
             }
             catch (Exception)
             {
 
                 Console.WriteLine("Hatali giris yaptiniz");
             }
-            Console.WriteLine("-Araba Bulma Demosu-");
+            Console.WriteLine("-Markaya gore araba bulma demosu-");
             try
             {
-                int id = Convert.ToInt32(Console.ReadLine());
-                var getCar = carManager.GetById(id);
-                Console.WriteLine($"{getCar.Description} Fiyati:{getCar.DailyPrice}TL Uretim Yili : {getCar.ModelYear}");
+                Console.WriteLine("Marka listesi \n -----------");
+                foreach (var item in brandManager.GetAll())
+                {
+                    Console.WriteLine($"#{item.Id} - {item.Name}");
+                }
+                Console.Write("Bulmak istediginiz markanin idsini yaziniz :");
+                int brandId = Convert.ToInt32(Console.ReadLine());
+                var brandListId = carManager.GetCarsByBrandId(brandId);
+                var brand = brandManager.GetBrandById(brandId);
+                Console.WriteLine($"{brand.Name} markasinin arabalari listeleniyor...");
+                foreach (var item in brandListId)
+                {
+                    Console.WriteLine($"------------- \n {item.Description} \n Gunluk Fiyati : {item.DailyPrice} \n Model Yili : {item.ModelYear} \n -------------");
+                }
             }
             catch (Exception)
             {
                 Console.WriteLine("Hatali giris yaptiniz");
             }
-            
+            Console.WriteLine("-Renk Ekleme Demosu-");
+            try
+            {
+                Console.Write("Girmek istediginiz rengin ismini yaziniz :");
+                var colorName = Console.ReadLine();
+                Color tempColor = new Color { Name = colorName };
+                colorManager.Add(tempColor);
+                Console.WriteLine("Istenen renk basariyla db'ye eklenmistir");
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Hatali giris yaptiniz");
+            }
             
         }
     }
