@@ -1,4 +1,5 @@
-﻿using Entities.Concrete;
+﻿using Core.DataAccess;
+using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -14,11 +15,11 @@ namespace DataAccess.Abstract
         void Delete(Brand brand);
 
 
-         Brand Get(Expression<Func<Brand, bool>> filter);
+        Brand Get(Expression<Func<Brand , bool>> filter);
 
 
 
-         List<Brand> GetAll(Expression<Func<Brand, bool>> filter = null);
+        List<Brand> GetAll(Expression<Func<Brand, bool>> filter = null);
 
 
 
