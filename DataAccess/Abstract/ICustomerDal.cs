@@ -8,7 +8,7 @@ using System.Text;
 
 namespace DataAccess.Abstract
 {
-    public interface IBrandDal : IEntityRepository<Brand>
-    {       
+    public interface ICustomerDal : IEntityRepository<Customer>
+    {
     }
 }
