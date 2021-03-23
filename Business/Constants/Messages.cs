@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Core.Entities.Concrete;
+using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text;
@@ -49,6 +50,12 @@ namespace Business.Constants
         public static string ImageCapacityForACarReached = "Bir arabanin max 5 resmi olabilir";
 
         public static string AuthorizationDenied="Bunu yapabilmek icin yetkiniz yok";
+        internal static string UserRegistered;
+        internal static User UserNotFound;
+        internal static User PasswordError;
+        internal static string SuccessfulLogin;
+        internal static string UserAlreadyExists;
+        internal static string AccessTokenCreated;
     }
 }
 
