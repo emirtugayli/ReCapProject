@@ -50,12 +50,12 @@ namespace Business.Constants
         public static string ImageCapacityForACarReached = "Bir arabanin max 5 resmi olabilir";
 
         public static string AuthorizationDenied="Bunu yapabilmek icin yetkiniz yok";
-        internal static string UserRegistered;
-        internal static User UserNotFound;
-        internal static User PasswordError;
-        internal static string SuccessfulLogin;
-        internal static string UserAlreadyExists;
-        internal static string AccessTokenCreated;
+        public static string UserRegistered = "Kayit olundu.";
+        public static string UserNotFound = "Kullanici bulunamadi";
+        public static string PasswordError = "Sifre yanlis";
+        public static string SuccessfulLogin = "Giris basarili";
+        public static string UserAlreadyExists = "Boyle bir kullanici zaten var";
+        public static string AccessTokenCreated = "Token olusturuldu";
     }
 }
 
